@@ -17,6 +17,161 @@ Our extension is a staff entity, which allows us to store and acsess details abo
 
 # Section 4 Data Dictionary
 
+## BUDGET
+| Column Name     | Data Type     | Key | Description                          |
+|----------------|--------------|-----|--------------------------------------|
+| BudgetID       | int          | PK  | Unique identifier for each budget    |
+| Term           | varchar(45)  |     | Academic term associated with budget |
+| BudgetAmount   | decimal(45,0)|     | Allocated budget amount              |
+| BudgetDateSet  | date         |     | Date the budget was established      |
+| ClubID         | int          | FK  | References CLUB(ClubID)              |
+
+## CLUB
+| Column Name        | Data Type    | Key | Description                              |
+|--------------------|-------------|-----|------------------------------------------|
+| ClubID            | int         | PK  | Unique identifier for each club          |
+| ClubName          | varchar(45) |     | Name of the club                         |
+| Category          | varchar(45) |     | Category or type of club                 |
+| DateEstablished   | date        |     | Date the club was established            |
+| PrimaryEmail      | varchar(45) |     | Primary contact email                    |
+| WebsiteSocialLink | varchar(45) |     | Website or social media link             |
+| SisterClubID      | int         | FK  | References CLUB(ClubID)                  |
+
+## CLUB_FAIR
+| Column Name | Data Type    | Key | Description                     |
+|------------|-------------|-----|---------------------------------|
+| FairID     | int         | PK  | Unique identifier for club fair |
+| Date       | date        |     | Date of the fair                |
+| StartTime  | time        |     | Start time                      |
+| EndTime    | time        |     | End time                        |
+| VenueName  | varchar(45) |     | Location of the fair            |
+
+## EQUIPMENT
+| Column Name   | Data Type     | Key | Description                     |
+|--------------|--------------|-----|---------------------------------|
+| EquipmentID  | int          | PK  | Unique identifier for equipment |
+| ItemName     | varchar(45)  |     | Name of the item                |
+| Description  | varchar(45)  |     | Description of the item         |
+| PurchaseValue| decimal(45,0)|     | Purchase cost                   |
+| ClubID       | int          | FK  | References CLUB(ClubID)         |
+
+## CHECKOUT
+| Column Name        | Data Type | Key    | Description                          |
+|--------------------|----------|--------|--------------------------------------|
+| CheckoutID        | int      | PK     | Unique checkout identifier           |
+| CheckoutDate      | date     |        | Date item was checked out            |
+| ReturnDueDate     | date     |        | Expected return date                 |
+| ActualReturnDate  | date     |        | Actual return date                   |
+| StudentID         | int      | FK     | References STUDENT(StudentID)        |
+| EquipmentID       | int      | PK, FK | References EQUIPMENT(EquipmentID)    |
+| ConditionID_Out   | int      | FK     | Condition at checkout                |
+| ConditionID_Return| int      | FK     | Condition at return                  |
+
+## EQUIPMENT_CONDITION
+| Column Name   | Data Type    | Key | Description                  |
+|--------------|-------------|-----|------------------------------|
+| ConditionID  | int         | PK  | Unique condition identifier  |
+| ConditionName| varchar(45) |     | Description of condition     |
+
+## EVENT
+| Column Name | Data Type    | Key | Description             |
+|------------|-------------|-----|-------------------------|
+| EventID    | int         | PK  | Unique event identifier |
+| EventTitle | varchar(45) |     | Title of the event      |
+| Date       | date        |     | Event date              |
+| StartTime  | time        |     | Start time              |
+| EndTime    | time        |     | End time                |
+| Location   | varchar(45) |     | Event location          |
+
+## ATTENDANCE
+| Column Name        | Data Type | Key    | Description                      |
+|--------------------|----------|--------|----------------------------------|
+| AttendanceID      | int      | PK     | Unique attendance record         |
+| CheckedIn         | tinyint  |        | Check-in status                  |
+| EarnedServiceHours| tinyint  |        | Service hours indicator          |
+| NumberOfHours     | int      |        | Number of hours earned           |
+| StudentID         | int      | PK, FK | References STUDENT(StudentID)    |
+| EventID           | int      | PK, FK | References EVENT(EventID)        |
+
+## HOST
+| Column Name | Data Type    | Key | Description               |
+|------------|-------------|-----|---------------------------|
+| HostID     | int         | PK  | Unique host identifier    |
+| HostType   | varchar(45) |     | Type of host              |
+| EventID    | int         | FK  | References EVENT(EventID) |
+| ClubID     | int         | FK  | References CLUB(ClubID)   |
+
+## RESERVATION
+| Column Name     | Data Type | Key    | Description                    |
+|----------------|----------|--------|--------------------------------|
+| ReservationID  | int      | PK     | Unique reservation identifier  |
+| TableNumber    | int      |        | Assigned table number          |
+| RequestedPower | tinyint  |        | Power access required          |
+| FairID         | int      | PK, FK | References CLUB_FAIR(FairID)   |
+| ClubID         | int      | PK, FK | References CLUB(ClubID)        |
+
+## REQUEST
+| Column Name        | Data Type     | Key | Description                    |
+|--------------------|--------------|-----|--------------------------------|
+| RequestID         | int          | PK  | Unique request identifier      |
+| RequestDate       | date         |     | Date submitted                 |
+| RequestedAmount   | decimal(45,0)|     | Amount requested               |
+| PurposeDescription| varchar(45)  |     | Purpose of request             |
+| Status            | varchar(45)  |     | Approval status                |
+| ApprovedAmount    | decimal(45,0)|     | Amount approved                |
+| DecisionDate      | date         |     | Decision date                  |
+| EventID           | int          | FK  | References EVENT(EventID)      |
+| ClubID            | int          | FK  | References CLUB(ClubID)        |
+| StaffID_Approver  | int          | FK  | Primary approver               |
+| StaffID_Reviewer  | int          | FK  | Secondary reviewer             |
+
+## MEMBERSHIP
+| Column Name       | Data Type    | Key    | Description                   |
+|------------------|-------------|--------|-------------------------------|
+| MembershipID     | int         | PK     | Unique membership identifier  |
+| ClubID           | int         | FK     | References CLUB(ClubID)       |
+| JoinDate         | date        |        | Date joined                   |
+| MembershipStatus | varchar(45) |        | Status                        |
+| StudentID        | int         | PK, FK | References STUDENT(StudentID) |
+
+## ROLE
+| Column Name | Data Type    | Key | Description               |
+|------------|-------------|-----|---------------------------|
+| RoleID     | int         | PK  | Unique role identifier    |
+| RoleName   | varchar(45) |     | Role name                 |
+| StartDate  | date        |     | Start date                |
+| EndDate    | date        |     | End date                  |
+| StudentID  | int         | FK  | References STUDENT        |
+| ClubID     | int         | FK  | References CLUB           |
+
+## PURCHASE
+| Column Name | Data Type     | Key | Description               |
+|------------|--------------|-----|---------------------------|
+| PurchaseID | int          | PK  | Unique purchase ID        |
+| VendorName | varchar(45)  |     | Vendor                    |
+| PurchaseDate| date        |     | Date of purchase          |
+| Amount     | decimal(45,0)|     | Purchase amount           |
+| Reimbursed | tinyint      |     | Reimbursement status      |
+| RequestID  | int          | FK  | References REQUEST        |
+
+## STAFF
+| Column Name | Data Type    | Key | Description           |
+|------------|-------------|-----|-----------------------|
+| StaffID    | int         | PK  | Unique staff ID       |
+| Name       | varchar(45) |     | Staff name            |
+| Phone      | varchar(45) |     | Phone number          |
+| Title      | varchar(45) |     | Job title             |
+| Email      | varchar(45) |     | Email address         |
+
+## STUDENT
+| Column Name       | Data Type    | Key | Description                  |
+|------------------|-------------|-----|------------------------------|
+| StudentID        | int         | PK  | Unique student identifier    |
+| Name             | varchar(45) |     | Student name                 |
+| PhoneNumber      | varchar(45) |     | Phone number                 |
+| UniversityEmail  | varchar(45) |     | University email             |
+| ExpectedGradYear | int         |     | Expected graduation year     |
+
 # Section 5 SQL Queries
 
 ## Complex 1
@@ -120,5 +275,18 @@ Why it matters: This provides a clear list of available equipment types for inve
 SELECT DISTINCT Item Name
 FROM EQIPMENT;
 ```
+
+| Query       | GROUP BY | JOIN | 2+ JOINs | HAVING | WHERE | ORDER BY | OTHER |
+|------------|----------|------|----------|--------|-------|----------|-----------|
+| Simple 1   |          |      |          |        | x     |          | SUBQUEARY |
+| Simple 2   |          |      |          |        | x     |          |           |
+| Simple 3   | x        |      |          | x      |       |          | AGGREATION|
+| Simple 4   |          |      |          |        |       |          | DISTINCT  |
+| Complex 1  | x        | x    |          |        |       | x        |           |
+| Complex 2  | x        | x    |          |        |       | x        |           |
+| Complex 3  | x        | x    |          | x      | x     |          |AGGREGATION|
+| Complex 4  | x        | x    | x        |        | x     | x        |           |
+| Complex 5  |          | x    |          |        |       |          | IF LOGIC  |
+| Complex 6  |          |      |          |        | x     |          | SUBQUEARY |
 
 # Section 6 Database information
