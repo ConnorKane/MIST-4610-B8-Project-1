@@ -15,6 +15,12 @@ Our extension is a staff entity, which allows us to store and acsess details abo
 
 # Section 3 Data Model
 
+<img width="1858" height="1055" alt="modelPic" src="https://github.com/user-attachments/assets/b2dfcf16-1cda-4c32-836a-61b69d22147b" />
+
+### As every entity in the model has an id field and can uniquely identified without the presence of other attributes, all of the relationships are identifying.
+
+
+
 # Section 4 Data Dictionary
 
 ## BUDGET
@@ -177,7 +183,7 @@ Our extension is a staff entity, which allows us to store and acsess details abo
 ## Complex 1
 
 Question: How many events has each club hosted?
-Why it matters: This helps measure club activity levels and engagement across campus. Clubs hosting more events are often more active and involved in student life. This can also help administrators understand how much funding each club needs
+Why it matters: This helps measure club activity levels and engagement across campus. Clubs hosting more events are often more active and involved in student life. This can also help administrators understand how much funding each club needs.
 
 ```
 SELECT Club Name, COUNT()
@@ -213,7 +219,7 @@ HAVING COUNT() >= 3;
 ## Complex 4
 
 Question: How many students graduating in 2029 are in each club?
-Why it matters: This helps understand class-year representation in clubs, useful for planning recruitment and leadership continuity.
+Why it matters: This helps understand class year representation in clubs, useful for planning recruitment and leadership continuity.
 ```
 SELECT Club Name, COUNT()
 FROM CLUB c
@@ -226,7 +232,7 @@ ORDER BY COUNT();
 ## Complex 5
 
 Question: Which clubs have high or low budget values?
-Why it matters: Categorizing budgets makes it easier to quickly assess which clubs have significant funding and which may need additional support.
+Why it matters: Categorizing budgets makes it easier to quickly assess which clubs have significant funding and which may need additional support. This can also make it easier for staff adminstrators to know which budgets are more signifcant and may require a more careful look, and which can be expedited
 ```
 SELECT Club Name, IF(Budget Amount > 5000, "High value", "Low value") AS "Value"
 FROM CLUB c
@@ -235,7 +241,7 @@ JOIN BUDGET b ON c.ClubID = b.CLUB_ClubID;
 ## Complex 6
 
 Question: Which students are members of more than five clubs?
-Why it matters: This highlights highly involved students who may be strong candidates for leadership roles or recognition.
+Why it matters: This highlights highly involved students who may be strong candidates for leadership roles or recognition, additionally as * was selected, this allows administrators to conduct further analysis on what types of students are more involved.
 ```
 SELECT * FROM STUDENT s
 WHERE (SELECT COUNT(*) FROM MEMBERSHIP m
@@ -244,7 +250,7 @@ WHERE m.STUDENT_StudentID = s.StudentID ) > 5;
 ## Simple 1
 
 Question: Which students are members of at least one club?
-Why it matters: This shows overall student participation in campus organizations.
+Why it matters: This shows overall student participation in campus organizations, additionally it can be used to send mass emails.
 ```
 SELECT * FROM STUDENT
 WHERE StudentID IN (SELECT STUDENT_StudentID FROM MEMBERSHIP);
@@ -252,7 +258,7 @@ WHERE StudentID IN (SELECT STUDENT_StudentID FROM MEMBERSHIP);
 ## Simple 2
 
 Question: Which equipment checkouts resulted in a condition change?
-Why it matters: This helps track potential damage or wear to equipment, supporting maintenance and policy decisions.
+Why it matters: This helps track potential damage or wear to equipment, supporting maintenance and policy decisions, additionally this can allow administratiors to track which equipment may need to be replaced in the future.
 ```
 SELECT * FROM EQUIPMENT CHECKOUT
 WHERE EQUIPMENT CONDITION_ConditionID <> EQUIPMENT CONDITION_ConditionID1;
