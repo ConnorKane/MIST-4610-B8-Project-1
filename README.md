@@ -17,7 +17,15 @@ Our extension is a staff entity, which allows us to store and acsess details abo
 
 <img width="1858" height="1055" alt="modelPic" src="https://github.com/user-attachments/assets/b2dfcf16-1cda-4c32-836a-61b69d22147b" />
 
-### As every entity in the model has an id field and can uniquely identified without the presence of other attributes, all of the relationships are identifying.
+### Data model explanation
+
+Our model represents a fictitious structure of a Campus Club Fair at Peachtree State University. In this database, student organizations, memberships, events, attendance, and club funding can all be managed and tracked with ease. A student can join many clubs, and each of these respective clubs can have many students. This many to many relationship is expressed through the membership table. The membership table records a student’s status after they join a club. These students can then adopt leadership positions in these clubs. This is then recorded in the officer role entity which links a certain student to a specific club and shows the role name the student is associated with and the time period of their leadership. This allows clubs to track leadership changes over a certain time. 
+
+In our model, we have illustrated the multitude of relationships that relate to the club entity. A club can be associated with multiple events. Events themselves can be hosted by many clubs which then results in another many to many relationship which is joined by the event host table. Event participation is tracked through the event attendance entity. This table connects students to events and records their check-in status and service hours. Clubs can then participate in club fairs. This relationship is then managed through the fair reservation table. This entity assigns clubs to specific fairs and records details like table numbers and access requests.
+
+Equipment and finances are also captured through our model. Equipment is owned by clubs, and students can borrow equipment through the equipment checkout relationship. This relationship connects students, equipment, and equipment condition to track equipment usage and returns. Each club is associated with an assigned budget, and clubs can submit funding requests tied to specific events. Staff then reviews these requests, and once they are approved, a purchase can then be made. These purchases are directly linked back to the original funding request, an event, and the club associated with the event. These relationships ensure that entities associated with club operations are organized and traceable. 
+
+
 
 
 
