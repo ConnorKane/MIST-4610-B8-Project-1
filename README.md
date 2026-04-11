@@ -304,3 +304,8 @@ FROM EQIPMENT;
 | Complex 6  |          |      |          |        | x     |          | SUBQUEARY |
 
 # Section 6 Database information
+
+all quaries in GP_Qx
+
+Database name - mb_B8
+Database pswd - 89898989
